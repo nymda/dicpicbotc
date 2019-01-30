@@ -27,7 +27,7 @@ namespace dicpicbotc
                 .AddSingleton(dComm)
                 .BuildServiceProvider();
 
-            string bottoken = "NTM5OTE2NzY3MjI5NzcxODE0.DzJUlg.kknjp5J9kIpL3bmUEJo_XJXbyKs";
+            string bottoken = "NTM5OTE2NzY3MjI5NzcxODE0.DzOo2w.i-pfxRrJvJ_ijxVTwy7fX3pzjnw";
 
             dSocket.Log += Log;
 
@@ -69,11 +69,12 @@ namespace dicpicbotc
 
                 if (!result.IsSuccess)
                 {
+                    
                     Console.WriteLine(result.ErrorReason);
                 }
                 if (result.IsSuccess)
                 {
-                    Console.WriteLine("responded to {0}", message.Author);
+                    Console.WriteLine("[info] responded to {0}", message.Author);
                 }
             }
         }
