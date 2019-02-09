@@ -12,7 +12,7 @@ namespace dicpicbotc.Modules
         [Command("ping")]
         public async Task PingAsync()
         {
-            await ReplyAsync("hello world!");
+            await ReplyAsync("Pong!");
         }
     }
 }

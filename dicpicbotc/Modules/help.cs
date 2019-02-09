@@ -20,6 +20,7 @@ namespace dicpicbotc.Modules
 dp.help
 dp.hug
 dp.ping
+dp.proto (-s submit, -i info)
 dp.pnsfw (porn! | -s submit, -i info)
 dp.e621 (porn! | -f fast mode)
 

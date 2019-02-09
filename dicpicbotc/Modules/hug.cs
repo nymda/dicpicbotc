@@ -18,6 +18,12 @@ namespace dicpicbotc.Modules
         [Command("hug")]
         public async Task Hug(string temp)
         {
+            List<string> hugMessages = new List<String> { " hugged ", " snugged ", " tacklesnugs ", " cuddles " };
+
+            Random r = new Random();
+
+            int hugInt = r.Next(hugMessages.Count);
+
             SocketUser sender = Context.Message.Author;
             var hugged = Context.Message.MentionedUsers.FirstOrDefault();
 
@@ -25,7 +31,14 @@ namespace dicpicbotc.Modules
             {
                 await ReplyAsync("you cant hug that!");
             }
-            await ReplyAsync(sender.Mention + " hugged " + hugged.Mention);
+
+            if ((hugged.IsBot) && (hugged.Username != "dicpicBot"))
+            {
+                await ReplyAsync(sender.Mention + " tried to hug " + hugged.Mention + " but im the only bot allowed to be cuddled!");
+                return;
+            }
+
+            await ReplyAsync(sender.Mention + hugMessages[hugInt] + hugged.Mention);
         }
 
     }
