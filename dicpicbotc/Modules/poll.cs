@@ -52,14 +52,21 @@ namespace dicpicbotc.Modules
 
             var msg = await ReplyAsync(responce);
 
+            string storeData = "";
+
             foreach (string i in objectsSplit)
             {
-                await msg.AddReactionAsync(new Emoji(regionalAlphabet[counter2]));
+                //await msg.AddReactionAsync(new Emoji(regionalAlphabet[counter2]));
+
+                storeData = storeData + i + ",0\n";
 
                 counter2++;
             }
 
-            File.WriteAllText(dppath + "/" + ID + ".txt", msg.Id.ToString());
+            File.WriteAllText(dppath + "/" + ID + ".txt", msg.Id.ToString() + "\n" + title + "\n" + storeData);
+            var f = File.Create(dppath + "/" + ID + "_voters.txt");
+            f.Dispose();
+           
         }
     }
 }
