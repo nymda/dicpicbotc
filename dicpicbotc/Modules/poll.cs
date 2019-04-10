@@ -14,59 +14,87 @@ namespace dicpicbotc.Modules
     public class poll : ModuleBase<SocketCommandContext>
     {
         [Command("poll")]
-        public async Task Poll(params string[] objects)
+        public async Task Poll(string flags, params string[] data)
         {
             string dppath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/dicpicbot_data/polls";
             Random r = new Random();
             const string chars = "abcdefghijklmnopqrstuvwxyz";
             string ID =  new string(Enumerable.Repeat(chars, 5).Select(s => s[r.Next(s.Length)]).ToArray());
 
+            string creatorid = (Context.Message.Author.Id).ToString();
+
             List<String> regionalAlphabet = new List<string> { "🇦", "🇧", "🇨", "🇩", "🇪", "🇫", "🇬", "🇭", "🇮", "🇯", "🇰", "🇱"};
 
-            var builder = new EmbedBuilder();
-            string joined = string.Join(' ', objects);
-            string[] titleObjects = joined.Split("|");
-            string title = titleObjects[0];
-            string[] objectsSplit = titleObjects[1].Split(' ');
-
-            if(objectsSplit.Length > 11)
+            if(flags == "-new")
             {
-                await ReplyAsync("please use 12 or less items.");
-                return;
+                string holder = "";
+
+                if (data.Length == 0)
+                {
+                    holder = "NO TITLE";
+                }
+
+                foreach(string s in data)
+                {
+                    holder = holder + s;
+                }
+                var b = File.Create(dppath + "/" + ID + ".txt");
+                b.Dispose();
+                File.WriteAllText(dppath + "/" + ID + ".txt", creatorid + "\n" + holder);
+                var f = File.Create(dppath + "/" + ID + "_voters.txt");
+                var msg = await ReplyAsync("new poll created. ID: " + ID);
+                f.Dispose();
+                b.Dispose();
             }
 
-            builder.WithTitle(title);
-
-            objectsSplit = objectsSplit.Skip(1).ToArray();
-
-            int counter = 0;
-            int counter2 = 0;
-
-            string responce = title + "| (ID: " + ID + ")\n";
-
-            foreach (string i in objectsSplit)
+            if (flags == "-list")
             {
-                responce = responce + regionalAlphabet[counter] + " " + i + "\n";
-                counter++;
+                string holder = "";
+                DirectoryInfo pathinfo = new DirectoryInfo(dppath);
+                foreach (FileInfo File in pathinfo.GetFiles())
+                {
+                    if(!File.Name.Contains("_"))
+                    {
+                        string file = (File.Name).Replace(".txt", "");
+                        holder = holder + file + "\n";
+                    }
+
+                }
+
+                var msg = await ReplyAsync("current polls IDs:\n" + holder);
             }
 
-            var msg = await ReplyAsync(responce);
-
-            string storeData = "";
-
-            foreach (string i in objectsSplit)
+            if (flags == "-add")
             {
-                //await msg.AddReactionAsync(new Emoji(regionalAlphabet[counter2]));
+                string id = data[0];
+                string holder = "";
+                for(int i = 1; i < data.Length; i++)
+                {
+                    holder = holder + " " + data[i];
+                }
 
-                storeData = storeData + i + ",0\n";
+                try
+                {
+                    string[] currentpoll = File.ReadAllLines(dppath + "/" + id + ".txt");
+                    if(currentpoll[0] != creatorid)
+                    {
+                        await ReplyAsync("You cannot edit that poll.");
+                        return;
+                    }
+                    holder = holder + ",0";
+                    List<string> currentpolledit = currentpoll.ToList();
+                    currentpolledit.Add(holder);
+                    currentpoll = currentpolledit.ToArray();
+                    File.WriteAllLines(dppath + "/" + id + ".txt", currentpoll);
+                }
+                catch
+                {
+                    await ReplyAsync("poll not found");
+                    return;
+                }
 
-                counter2++;
+                var msg = await ReplyAsync("adding: " + holder.Substring(0, holder.Length - 2));
             }
-
-            File.WriteAllText(dppath + "/" + ID + ".txt", msg.Id.ToString() + "\n" + title + "\n" + storeData);
-            var f = File.Create(dppath + "/" + ID + "_voters.txt");
-            f.Dispose();
-           
         }
     }
 }

@@ -18,6 +18,7 @@ namespace dicpicbotc.Modules
         {
             string dppath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/dicpicbot_data/polls";
             List<string> voters = new List<string> { };
+            List<string> alpha = new List<string> { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
             DirectoryInfo d = new DirectoryInfo(dppath);
             string fileLocation = "";
             bool foundFile = false;
@@ -33,17 +34,43 @@ namespace dicpicbotc.Modules
                 }
             }
 
+            string voteLow = vote.ToLower();
 
-            if(voters.Count != 0)
+            string[] polldata = File.ReadAllLines(fileLocation);
+            List<string> polldataList = File.ReadAllLines(fileLocation).ToList();
+
+            try
             {
-                for (int i = 0; i <= voters.Count; i++)
+                if (voters.Count != 0)
                 {
-                    if (voters[i] == Context.Message.Author.Id.ToString())
+                    for (int i = 0; i <= voters.Count; i++)
                     {
-                        await ReplyAsync("you have already voted on this poll.");
-                        return;
+                        if (voters[i] == Context.Message.Author.Id.ToString())
+                        {
+                            await ReplyAsync("you have already voted on this poll.");
+                            return;
+                        }
                     }
                 }
+            }
+            catch
+            {
+
+            }
+
+
+            if (alpha.Contains(voteLow))
+            {
+                int position = alpha.IndexOf(voteLow);
+                string[] current = polldata[position + 2].Split(",");
+                current[1] = (Int32.Parse(current[1]) + 1).ToString();
+                string modified = string.Join(",", current);
+                polldataList[position + 2] = modified;
+                File.WriteAllLines(fileLocation, polldataList);
+                await ReplyAsync("(" + id + ") " + current[0] + " now has " + current[1] + " votes!");
+                voters.Add(Context.Message.Author.Id.ToString());
+                File.WriteAllLines(dppath + "/" + id + "_voters.txt", voters.ToArray());
+                return;
             }
 
 
@@ -53,8 +80,6 @@ namespace dicpicbotc.Modules
                 return;
             }
 
-            string[] polldata = File.ReadAllLines(fileLocation);
-            List<string> polldataList = File.ReadAllLines(fileLocation).ToList();
 
             int counter = 0;
 
