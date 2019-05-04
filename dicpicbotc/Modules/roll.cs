@@ -40,7 +40,7 @@ namespace dicpicbotc.Modules
                 int total = 0;
                 int current = 0;
 
-                for(int i = 0; i <= diceNum; i++)
+                for(int i = 1; i <= diceNum; i++)
                 {
                     current = r.Next(1, sideNum + 1);
                     dices.Add(current);

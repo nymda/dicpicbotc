@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Discord;
@@ -6,12 +7,14 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 
-//base by youtube codeforge
+//base by youtube: codeforge
 
 namespace dicpicbotc
 {
     class Program
     {
+        string TokenPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/dicpicbot_data/token.txt";
+
         static void Main(string[] args) => new Program().RunBotAsync().GetAwaiter().GetResult();
 
         private DiscordSocketClient dSocket;
@@ -27,16 +30,12 @@ namespace dicpicbotc
                 .AddSingleton(dComm)
                 .BuildServiceProvider();
 
-            string bottoken = "NTM5OTE2NzY3MjI5NzcxODE0.DzOo2w.i-pfxRrJvJ_ijxVTwy7fX3pzjnw";
-
+            string bottoken = File.ReadAllText(TokenPath);
+            Console.WriteLine(bottoken);
             dSocket.Log += Log;
-
             await RegisterCommandAsync();
-
             await dSocket.LoginAsync(Discord.TokenType.Bot, bottoken);
-
             await dSocket.StartAsync();
-
             await Task.Delay(-1);
         }
 
@@ -49,27 +48,20 @@ namespace dicpicbotc
         public async Task RegisterCommandAsync()
         {
             dSocket.MessageReceived += handleCommandAsync;
-
             await dComm.AddModulesAsync(Assembly.GetEntryAssembly(), services);
         }
 
         private async Task handleCommandAsync(SocketMessage arg)
         {
             var message = arg as SocketUserMessage;
-
             if (message is null || message.Author.IsBot) return;
-
             int arguentPosition = 0;
-
             if (message.HasStringPrefix("dp.", ref arguentPosition) || message.HasMentionPrefix(dSocket.CurrentUser, ref arguentPosition))
             {
                 var context = new SocketCommandContext(dSocket, message);
-
                 var result = await dComm.ExecuteAsync(context, arguentPosition, services);
-
                 if (!result.IsSuccess)
-                {
-                    
+                {           
                     Console.WriteLine(result.ErrorReason);
                 }
                 if (result.IsSuccess)

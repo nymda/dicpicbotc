@@ -58,7 +58,7 @@ namespace dicpicbotc.Modules
 
             }
 
-
+            //what the fuck does this unholy mess do
             if (alpha.Contains(voteLow))
             {
                 int position = alpha.IndexOf(voteLow);

@@ -9,10 +9,10 @@ namespace dicpicbotc.Modules
 {
     public class Ping : ModuleBase<SocketCommandContext>
     {
-        [Command("ping")]
+        [Command("beep")]
         public async Task PingAsync()
         {
-            await ReplyAsync("Pong!");
+            await ReplyAsync("boop!");
         }
     }
 }

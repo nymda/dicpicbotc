@@ -34,6 +34,8 @@ namespace dicpicbotc.Modules
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             string rand = new string(Enumerable.Repeat(chars, 5).Select(s => s[random.Next(s.Length)]).ToArray());
 
+            
+
             if (setting == "-hiksploit")
             {
                 await ReplyAsync("processing...");
