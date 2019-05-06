@@ -15,7 +15,7 @@ namespace dicpicbotc.Modules
         [Command("version")]
         public async Task Version()
         {
-            await ReplyAsync("version: Release 0.0.6");
+            await ReplyAsync("version: Release 0.0.7");
         }
     }
 }
