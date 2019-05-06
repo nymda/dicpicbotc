@@ -23,12 +23,11 @@ namespace dicpicbotc.Modules
 
             List<string> e621list = new List<string> { };
 
-            await ReplyAsync("*processing*");
-
-            if(flags != "-f")
-            {
-                tag1 = flags;
-            }
+            tag5 = tag4;
+            tag4 = tag3;
+            tag3 = tag2;
+            tag2 = tag1;
+            tag1 = flags;
 
             string prestring = "https://e621.net/post/index.json?limit=10&tags=";
             WebClient w = new WebClient();
@@ -36,8 +35,13 @@ namespace dicpicbotc.Modules
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             string rand = new string(Enumerable.Repeat(chars, 5).Select(s => s[random.Next(s.Length)]).ToArray());
             w.Headers.Add("user-agent", "dicpicbot");
-            Console.WriteLine(prestring + tag1 + "," + tag2 + "," + tag3 + "," + tag4 + "," + tag5 + "," + tag6);
+            Console.WriteLine("[notif] e621 searching: " + tag1 + " " + tag2 + " " + tag3 + " " + tag4 + " " + tag5);
             byte[] e6d = w.DownloadData(prestring + tag1 + "," + tag2 + "," + tag3 + "," + tag4 + "," + tag5 + "," + tag6);
+            if(e6d.Length == 2)
+            {
+                await ReplyAsync("**No results!**");
+                return;
+            }
             string e6draw = Encoding.UTF8.GetString(e6d);
             string[] datarawsplit = e6draw.Split(new string[] { "]}" }, StringSplitOptions.None);
             for (int i = 0; i < datarawsplit.Count(); i++)
@@ -50,7 +54,6 @@ namespace dicpicbotc.Modules
                         string[] current2 = current[o].Split(new string[] { "\":\"" }, StringSplitOptions.None);
                         string final = current2[1].Replace("\"", string.Empty);
                         e621list.Add(final);
-                        //Console.WriteLine(final);
                     }
                 }
             }
@@ -58,18 +61,19 @@ namespace dicpicbotc.Modules
             Random r = new Random();
 
             int e621int = r.Next(e621list.Count);
-
             string[] e6name = (e621list[e621int]).Split("/");
+            await ReplyAsync("**yiff!**\n" + e621list[e621int]);
 
-            if(flags == "-f")
-            {
-                await ReplyAsync("**fast mode! **" + e621list[e621int]);
-                return;
-            }
+            //old content for non-fast mode
 
-            w.DownloadFile(e621list[e621int], dppath + "/" + e6name[6]);
+            //if(flags == "-f")
+            //{
+            //    await ReplyAsync("**fast mode! **" + e621list[e621int]);
+            //    return;
+            //}
 
-            await Context.Channel.SendFileAsync(dppath + "/" + e6name[6], "*magic porn robot.*");
+            //w.DownloadFile(e621list[e621int], dppath + "/" + e6name[6]);
+            //await Context.Channel.SendFileAsync(dppath + "/" + e6name[6], "*magic porn robot.*");
         }
     }
 }
