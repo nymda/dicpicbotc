@@ -26,6 +26,7 @@ dp.e621 (porn! | -f fast mode)
 dp.hansen (removes the last e621 message, for use when cub appears)
 dp.roll (rolls a dice. [X]d[Y])
 dp.avatar (gets your, or another users avatar)
+dp.fact (prints a random fact)
 dp.version (displays the bots version)
 
 dp.poll (creates a new poll)
