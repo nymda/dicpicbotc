@@ -16,8 +16,8 @@ namespace dicpicbotc.Modules
         [Command("hansen")]
         public async Task Hansen()
         {
-            string dppath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/dicpicbot_data/e621/lastmsg.txt";
-            string msgkey = File.ReadAllText(dppath);
+            string dppath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/dicpicbot_data/e621";
+            string msgkey = File.ReadAllText(dppath + "/lastmsg.txt");
             string[] data = msgkey.Split(",");
 
             if(Context.Message.Author.Id.ToString() == data[1])
@@ -25,7 +25,7 @@ namespace dicpicbotc.Modules
                 try
                 {
                     await Context.Channel.DeleteMessageAsync(ulong.Parse(data[0]));
-                    await ReplyAsync("Removed message.");
+                    await Context.Channel.SendFileAsync(dppath + "/hansen.jpg", "Seat taken.");
 
                 }
                 catch
