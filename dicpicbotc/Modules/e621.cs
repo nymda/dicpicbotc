@@ -62,7 +62,8 @@ namespace dicpicbotc.Modules
 
             int e621int = r.Next(e621list.Count);
             string[] e6name = (e621list[e621int]).Split("/");
-            await ReplyAsync("**yiff!**\n" + e621list[e621int]);
+            var msg = await ReplyAsync("**yiff!**\n" + e621list[e621int]);
+            File.WriteAllText(dppath + "/lastmsg.txt", msg.Id.ToString() + "," + Context.Message.Author.Id.ToString());
 
             //old content for non-fast mode
 
