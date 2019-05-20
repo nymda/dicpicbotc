@@ -41,7 +41,7 @@ namespace dicpicbotc
 
         private Task Log(LogMessage arg)
         {
-            Console.WriteLine(arg);
+            Console.WriteLine("[info] " + arg);
             return Task.CompletedTask;
         }
 
@@ -63,6 +63,21 @@ namespace dicpicbotc
                 if (!result.IsSuccess)
                 {           
                     Console.WriteLine(result.ErrorReason);
+                    if(result.ErrorReason == "This command may only be invoked in an NSFW channel.")
+                    {
+                        Console.WriteLine("[info] responded to {0}", message.Author);
+                        await message.Channel.SendMessageAsync("That can only be run in a NSFW channel.");
+                    }
+                    else if(result.ErrorReason == "Unknown command.")
+                    {
+                        Console.WriteLine("[info] responded to {0}", message.Author);
+                        await message.Channel.SendMessageAsync("I dont know that command.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("[info] responded to {0}", message.Author);
+                        await message.Channel.SendMessageAsync("error! tell kned about this.");
+                    }
                 }
                 if (result.IsSuccess)
                 {

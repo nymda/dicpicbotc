@@ -35,7 +35,7 @@ namespace dicpicbotc.Modules
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             string rand = new string(Enumerable.Repeat(chars, 5).Select(s => s[random.Next(s.Length)]).ToArray());
             w.Headers.Add("user-agent", "dicpicbot");
-            Console.WriteLine("[notif] e621 searching: " + tag1 + " " + tag2 + " " + tag3 + " " + tag4 + " " + tag5);
+            Console.WriteLine("[info] e621 searching: " + tag1 + " " + tag2 + " " + tag3 + " " + tag4 + " " + tag5);
             byte[] e6d = w.DownloadData(prestring + tag1 + "," + tag2 + "," + tag3 + "," + tag4 + "," + tag5 + "," + tag6);
             if(e6d.Length == 2)
             {

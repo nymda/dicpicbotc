@@ -60,7 +60,7 @@ namespace dicpicbotc.Modules
                     try
                     {
                         File.Delete(dppath + "/" + rand + ".jpg");
-                        Console.WriteLine("[notif] file deleted after posting.");
+                        Console.WriteLine("[info] file deleted after posting.");
                     }
                     catch
                     {
@@ -98,7 +98,7 @@ namespace dicpicbotc.Modules
                     try
                     {
                         File.Delete(dppath + "/" + rand + ".jpg");
-                        Console.WriteLine("[notif] file deleted after posting.");
+                        Console.WriteLine("[info] file deleted after posting.");
                     }
                     catch
                     {

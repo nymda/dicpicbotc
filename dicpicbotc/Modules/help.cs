@@ -19,6 +19,8 @@ namespace dicpicbotc.Modules
             ```normal commands:
 dp.help (displays this page)
 dp.hug (hugs a user)
+dp.echo (echos the users message back to them)
+dp.vent (echos the users message and removes the origional, making the message private)
 dp.ping (tests if im online. if you can read this, i am)
 dp.proto (-s submit, -i info)
 dp.pnsfw (porn! | -s submit, -i info)
