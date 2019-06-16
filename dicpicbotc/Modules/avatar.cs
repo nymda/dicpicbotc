@@ -24,7 +24,7 @@ namespace dicpicbotc.Modules
                 string ID = new string(Enumerable.Repeat(chars, 10).Select(s => s[r.Next(s.Length)]).ToArray());
                 string avatarpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/dicpicbot_data/avatars/";
                 Console.WriteLine("[info] Downloaded avatar.");
-                w.DownloadFile(Context.Message.Author.GetAvatarUrl(Discord.ImageFormat.Auto).ToString(), avatarpath + ID + ".png");
+                w.DownloadFile(Context.Message.Author.GetAvatarUrl(Discord.ImageFormat.Auto, 1024).ToString(), avatarpath + ID + ".png");
                 await ReplyAsync("Heres your avatar!. Mention someone else for theirs.");
                 await Context.Channel.SendFileAsync(avatarpath + ID + ".png");
             }
@@ -35,7 +35,7 @@ namespace dicpicbotc.Modules
                 var user = Context.Message.MentionedUsers.FirstOrDefault();
                 string avatarpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/dicpicbot_data/avatars/";
                 Console.WriteLine("[info] Downloaded avatar.");
-                w.DownloadFile(user.GetAvatarUrl(Discord.ImageFormat.Auto).ToString(), avatarpath + ID + ".png");
+                w.DownloadFile(user.GetAvatarUrl(Discord.ImageFormat.Auto, 1024).ToString(), avatarpath + ID + ".png");
 
                 if (user.Username.EndsWith('s'))
                 {

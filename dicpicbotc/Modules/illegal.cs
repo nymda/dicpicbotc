@@ -43,9 +43,9 @@ namespace dicpicbotc.Modules
             //Font goodFont = FindFont(g, user.Username, r.Size, font1);
             g.DrawString(user.Username, f, Brushes.Red, r, stringFormat);
 
-            template.Save("templatedrawn.png");
+            template.Save(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/dicpicbot_data/" + "templatedrawn.png");
 
-            await Context.Channel.SendFileAsync("templatedrawn.png");
+            await Context.Channel.SendFileAsync(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/dicpicbot_data/" + "templatedrawn.png");
 
             //await Context.Channel.SendFileAsync();
         }

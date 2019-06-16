@@ -30,6 +30,7 @@ dp.roll (rolls a dice. [X]d[Y])
 dp.avatar (gets your, or another users avatar)
 dp.fact (prints a random fact)
 dp.version (displays the bots version)
+dp.illegal (creates wanted poster thing)
 
 dp.poll (creates a new poll)
 dp.results (displays the results of a poll)
