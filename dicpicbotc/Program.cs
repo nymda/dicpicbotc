@@ -76,7 +76,7 @@ namespace dicpicbotc
                     else
                     {
                         Console.WriteLine("[info] responded to {0}", message.Author);
-                        await message.Channel.SendMessageAsync("error! tell kned about this.");
+                        await message.Channel.SendMessageAsync("error parsing command. Check console.");
                     }
                 }
                 if (result.IsSuccess)
