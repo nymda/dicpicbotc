@@ -16,6 +16,7 @@ namespace dicpicbotc.Modules
         [Command("e621")]
         public async Task E621(string flags = "", string tag1 = "", string tag2 = "", string tag3 = "", string tag4 = "", string tag5 = "")
         {
+            bool isCub = false;
 
             string tag6 = "order:random";
 
@@ -49,6 +50,17 @@ namespace dicpicbotc.Modules
                 string[] current = datarawsplit[i].Split(',');
                 for (int o = 0; o < current.Count(); o++)
                 {
+                    if (current[o].Contains("tags\""))
+                    {
+                        string[] tags = current[o].Split(' ');
+                        foreach(string tag in tags)
+                        {
+                            if(tag == "cub")
+                            {
+                                isCub = true;
+                            }
+                        }
+                    }
                     if (current[o].Contains("file_url"))
                     {
                         string[] current2 = current[o].Split(new string[] { "\":\"" }, StringSplitOptions.None);
@@ -60,10 +72,18 @@ namespace dicpicbotc.Modules
 
             Random r = new Random();
 
-            int e621int = r.Next(e621list.Count);
+            int e621int = 0;
             string[] e6name = (e621list[e621int]).Split("/");
-            var msg = await ReplyAsync("**yiff!**\n" + e621list[e621int]);
-            File.WriteAllText(dppath + "/lastmsg.txt", msg.Id.ToString() + "," + Context.Message.Author.Id.ToString());
+            if (!(isCub))
+            {
+                var msg = await ReplyAsync("**yiff!**\n" + e621list[e621int]);
+                File.WriteAllText(dppath + "/lastmsg.txt", msg.Id.ToString() + "," + Context.Message.Author.Id.ToString());
+            }
+            else
+            {
+                await Context.Channel.SendFileAsync(dppath + "/hansen.jpg", "That image contained cub.");
+            }
+
 
             //old content for non-fast mode
 
