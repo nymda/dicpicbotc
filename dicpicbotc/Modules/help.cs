@@ -24,7 +24,8 @@ dp.vent (echos the users message and removes the origional, making the message p
 dp.ping (tests if im online. if you can read this, i am)
 dp.proto (-s submit, -i info)
 dp.pnsfw (porn! | -s submit, -i info)
-dp.e621 (porn! | -f fast mode)
+dp.e621 (porn!)
+dp.e926 (not porn!
 dp.hansen (removes the last e621 message, for use when cub appears)
 dp.roll (rolls a dice. [X]d[Y])
 dp.avatar (gets your, or another users avatar)
