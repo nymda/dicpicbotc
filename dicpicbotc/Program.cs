@@ -23,6 +23,7 @@ namespace dicpicbotc
 
         public async Task RunBotAsync()
         {
+            Console.WriteLine("[info] starting dicpicbot");
             dSocket = new DiscordSocketClient();
             dComm = new CommandService();
             services = new ServiceCollection()
@@ -31,7 +32,7 @@ namespace dicpicbotc
                 .BuildServiceProvider();
 
             string bottoken = File.ReadAllText(TokenPath);
-            Console.WriteLine(bottoken);
+            //Console.WriteLine(bottoken);
             dSocket.Log += Log;
             await RegisterCommandAsync();
             await dSocket.LoginAsync(Discord.TokenType.Bot, bottoken);
