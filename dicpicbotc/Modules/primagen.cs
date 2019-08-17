@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,10 @@ namespace dicpicbotc.Modules
 {
     public class primagen : ModuleBase<SocketCommandContext>
     {
+        public const int _width = 260;
+        public const int _height = 305;
+        public const string prima = "iVBORw0KGgoAAAANSUhEUgAAAQQAAAExCAMAAACtYSwmAAAABGdBTUEAALGPC/xhBQAAAwBQTFRFAAAAOzJ0TlJdYGVva3B7IrFM+rI8//IAqNrC2eDi8Pf58fj5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxapfrAAAAQB0Uk5T////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AFP3ByUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMjHxIGmVAAAKEElEQVR4Xu2a7Y7jOBIEb293Z7/e/3nnQsx0HU1RsmS75V4g44dQLBbJqgCmp4GZ//wMPyMBIgEiASIBIgEiASIBIgEiAf4tEn654fVbiQSIBPgXSfi78RUeIgEiAb6nBCbthyWWAdFvvYVIgEiAj0hoIy54PZv6119/rQyB57/RF79OJEAkwKck/LdBoHH4auphqRg8fId230IkQCTAZyWINuUCg5eKIebr4TtI+sbXiASIBPgmEn78+PHPP/8QFJIAFRNocPFGD5EAkQCXSVDnFXv+G2TwoLlEKzclAdiqI1ry1bVPEwkQCXClhN9++601/suff/7JV7MUZAYPop1YkAcyqqdYp1TjZ54iEiAS4DIJQKt4KBWapYfk1IPQKQJXv89DJEAkwJdKaF0bLSVBsNQsPSR3PMByV5safOZlD5EAkQBfLcED334OgNcNlh7jBpl9CaLddKdCGT98kkiASIDLJBRDkqWmECynEshvUQU67rfPEAkQCfClEoCuPG3H0nqXJ5YB0BYeBhV9zYCOQC399mEiASIBPiJhTY0glpHuVUwLvFjBlp8/RiRAJMBXSwBa8qi7tLE2VQxbYpoUbPn5A0QCRAJ8HwmCYvAkDWXA6xVbW+TdwSMiASIBLpAA9OMh71lm28CTdEyTYqvezz8iEiAS4BoJQEue/EZ1zt+A+rWwh12hGujjNdNdkn5+l0iASIDLJAAtef5G3/byS+GuCuHqho6A1y94iASIBLhAQmt/wuABPNUNdu2iMRQLVXox80DGfWwTCRAJcI2E5UfABtPRgLwGF/seHDXWNWTcygaRAJEAF0gA2vDMM9gFd3xjyLA8KAHWZ93HBpEA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";
+
         [Command("prima")]
         public async Task Primagen(string dim = "1x1")
         {
@@ -31,15 +36,15 @@ namespace dicpicbotc.Modules
 
             int numOfPrimas = dimx * dimy;
 
-            if(numOfPrimas > 100)
+            if(numOfPrimas > 64)
             {
-                await Context.Channel.SendMessageAsync("Too many primas, limiting at 100. (you tried to make " + numOfPrimas + ")");
+                await Context.Channel.SendMessageAsync("Too many primas, currently limiting at 64. (you tried to make " + numOfPrimas + ")");
                 return;
             }
 
             string dppath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/dicpicbot_data/";
             string tag = "-c";
-            Size psize = new Size(342, 341);
+            Size psize = new Size(_width, _height);
             Size mSize = getPrimSize(dim);
 
             Size newPrimaSize = getPrimSize(dim);
@@ -50,12 +55,36 @@ namespace dicpicbotc.Modules
             foreach (Point p in positions)
             {
                 Bitmap prima = GetNewPrima(tag);
+
+                using (Graphics graphics = Graphics.FromImage(prima))
+                {
+                    string primaName = getName();
+                    PointF point = new PointF(2f, 280f);
+                    Font lucFont = new Font("Lucida Console", 14);
+                    SizeF size = graphics.MeasureString(primaName, lucFont);
+                    RectangleF rect = new RectangleF(point, size);
+                    rect.Height = rect.Height + 1;
+                    graphics.FillRectangle(Brushes.Black, rect);
+                    point.Y = point.Y + 2;
+                    graphics.DrawString(primaName, lucFont, Brushes.White, point);
+                    graphics.Dispose();
+                }
+
                 gr.DrawImage(prima, p);                
             }
 
             BaseBmp.Save(dppath + "/prima.png", ImageFormat.Png);
 
             await Context.Channel.SendFileAsync(dppath + "/prima.png", "ILLEGAL.");
+        }
+
+        private string getName()
+        {
+            WebClient w = new WebClient();
+            byte[] dat = w.DownloadData("https://namey.muffinlabs.com/name.json?type=surname");
+            string name = System.Text.Encoding.UTF8.GetString(dat);
+            name = name.Substring(2, name.Length - 4);
+            return name;
         }
 
         public List<Point> getAllPositions(string dim)
@@ -70,7 +99,7 @@ namespace dicpicbotc.Modules
             {
                 for (int o = 0; o < y; o++)
                 {
-                    points.Add(new Point(342 * i, 341 * o));
+                    points.Add(new Point(_width * i, _height * o));
                 }
             }
 
@@ -80,8 +109,8 @@ namespace dicpicbotc.Modules
         public Size getPrimSize(string dim)
         {
             string[] dimxy = dim.Split("x");
-            int basex = 342;
-            int basey = 341;
+            int basex = _width;
+            int basey = _height;
             int x = Int32.Parse(dimxy[0]);
             int y = Int32.Parse(dimxy[1]);
             return new Size(basex * x, basey * y);
@@ -89,7 +118,7 @@ namespace dicpicbotc.Modules
 
         public Bitmap GetNewPrima(string tag)
         {
-            Bitmap drawn = new Bitmap(342, 341);
+            Bitmap drawn = new Bitmap(_width, _height);
             Color baseprimary = Color.FromArgb(107, 112, 123);
             Color basesecondary = Color.FromArgb(217, 224, 226);
             Color basehighlight = Color.FromArgb(250, 178, 60);
@@ -102,8 +131,7 @@ namespace dicpicbotc.Modules
             Color normalface = Color.FromArgb(78, 82, 93);
 
             Random rnd = new Random();
-            Bitmap primabitmap;
-            const string prima = "iVBORw0KGgoAAAANSUhEUgAAAVYAAAFBCAMAAAAboneSAAAABGdBTUEAALGPC/xhBQAAAwBQTFRFAAAAOzJ0TlJdYGVva3B7IrFM+rI8//IAqNrC2eDi8Pf58fj5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxapfrAAAAQB0Uk5T////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AFP3ByUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMjHxIGmVAAALWUlEQVR4Xu3b67KdNhqE4ck4PiS5/+v1NOrmGyFgHbZpYDv9/FglhATidZVrXDX5z88wSFaLZLVIVotktUhWi2S1SFaLZLVIVotktUhWi2S1SFaLZLVIVotktUhWi0+f9Y+Zru8hWS2S1eJ3yPp3c6uyyWqRrBafLCva9fkwZlPqb10rWS2S1eJeWVu0ia63On758qVmMFDRWb/4QslqkawWt8v63wYDBsIvOw6XHINydnj3WslqkawWN81KrdsEKSvuMMavcnYwqSdeJFktktXi7lm/ffv2zz//YFCYFWqMAVPSHcomq0WyWlyflS1qrKIzzKAsS1FbLpUVcKu28BK/fOz5ktUiWS1ukfXPP/9sKf748eMHflmnYGYoS23HhGUxw/VYzF1co9ecK1ktktXi+qyAj0fZiss6PUxuliXuwkCrb1A2WS2S1eKarK2D8JJZCZes08Pkg7IwPat1BO25rmyyWiSrxWVZlXD++xR03eBSYWaYeZyV2pMWcTmjF58lWS2S1eL6rGWYxCW7EC43s2J+Ty3gdr37FMlqkawW12QFfKf6daYY3TzGbAq8hbJD3H7NgFugLvVuv2S1SFaLe2Vdqyg0RVrG3VygixXc0uvNktUiWS0uywr4SMV7qIXajTvcos1Jwi293ilZLZLV4hNkJSwGtWk4A7pe2buFeZ3AJlktktXiyqyAL1S2panWDrXpbE7S3nq93iZZLZLV4uKsgI9Uy1m1wP9+4j+lerhLXAP9eG3zLib1eo9ktUhWi+uzAj5SRZs+xPQPqYdxSasbbgFdX1E2WS2S1eLKrC3IhqEsqNMMd1W3GRYTV+piqyxmdA6DZLVIVouLs05/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";
+            Bitmap primabitmap;           
             byte[] byteBuffer = Convert.FromBase64String(prima);
             MemoryStream memoryStream = new MemoryStream(byteBuffer);
             memoryStream.Position = 0;
@@ -182,11 +210,11 @@ namespace dicpicbotc.Modules
                     {
                         if (tag == "-c")
                         {
-                            drawing.FillRectangle(fa, i, o, 1, 1);
+                            //drawing.FillRectangle(fa, i, o, 1, 1);
                         }
                         else
                         {
-                            drawing.FillRectangle(fan, i, o, 1, 1);
+                            //drawing.FillRectangle(fan, i, o, 1, 1);
                         }
                     }
                     else if (p == baseweird)
@@ -207,7 +235,6 @@ namespace dicpicbotc.Modules
 
                 }
             }
-
             return drawn;
         }
     }
