@@ -16,6 +16,7 @@ namespace dicpicbotc.Modules
         [Command("e621")]
         public async Task E621(string flags = "", string tag1 = "", string tag2 = "", string tag3 = "", string tag4 = "", string tag5 = "")
         {
+
             bool isCub = false;
 
             string tag6 = "order:random";

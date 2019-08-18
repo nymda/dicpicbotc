@@ -14,17 +14,11 @@ namespace dicpicbotc.Modules
     {
         public const int _width = 260;
         public const int _height = 305;
-        public const string prima = "iVBORw0KGgoAAAANSUhEUgAAAQQAAAExCAMAAACtYSwmAAAABGdBTUEAALGPC/xhBQAAAwBQTFRFAAAAOzJ0TlJdYGVva3B7IrFM+rI8//IAqNrC2eDi8Pf58fj5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxapfrAAAAQB0Uk5T////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AFP3ByUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMjHxIGmVAAAKEElEQVR4Xu2a7Y7jOBIEb293Z7/e/3nnQsx0HU1RsmS75V4g44dQLBbJqgCmp4GZ//wMPyMBIgEiASIBIgEiASIBIgEiAf4tEn654fVbiQSIBPgXSfi78RUeIgEiAb6nBCbthyWWAdFvvYVIgEiAj0hoIy54PZv6119/rQyB57/RF79OJEAkwKck/LdBoHH4auphqRg8fId230IkQCTAZyWINuUCg5eKIebr4TtI+sbXiASIBPgmEn78+PHPP/8QFJIAFRNocPFGD5EAkQCXSVDnFXv+G2TwoLlEKzclAdiqI1ry1bVPEwkQCXClhN9++601/suff/7JV7MUZAYPop1YkAcyqqdYp1TjZ54iEiAS4DIJQKt4KBWapYfk1IPQKQJXv89DJEAkwJdKaF0bLSVBsNQsPSR3PMByV5safOZlD5EAkQBfLcED334OgNcNlh7jBpl9CaLddKdCGT98kkiASIDLJBRDkqWmECynEshvUQU67rfPEAkQCfClEoCuPG3H0nqXJ5YB0BYeBhV9zYCOQC399mEiASIBPiJhTY0glpHuVUwLvFjBlp8/RiRAJMBXSwBa8qi7tLE2VQxbYpoUbPn5A0QCRAJ8HwmCYvAkDWXA6xVbW+TdwSMiASIBLpAA9OMh71lm28CTdEyTYqvezz8iEiAS4BoJQEue/EZ1zt+A+rWwh12hGujjNdNdkn5+l0iASIDLJAAtef5G3/byS+GuCuHqho6A1y94iASIBLhAQmt/wuABPNUNdu2iMRQLVXox80DGfWwTCRAJcI2E5UfABtPRgLwGF/seHDXWNWTcygaRAJEAF0gA2vDMM9gFd3xjyLA8KAHWZ93HBpEA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";
+        public const string prima = "iVBORw0KGgoAAAANSUhEUgAAAQQAAAExCAMAAACtYSwmAAAABGdBTUEAALGPC/xhBQAAAwBQTFRFAAAAOzJ0TlJdYGVva3B7IrFM+rI8//IAqNrC2eDi8Pf5AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAsjkizQAAAQB0Uk5T////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////AFP3ByUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMjHxIGmVAAAKbElEQVR4Xu2d7Y4jRw4Ez2ff2r73f9+96MoUj+ovdUua1tjO+NFgsVhVZAA7O4AX8L9+hp+RAJEAkQCRAJEAkQCRAJEAkQB/FQm/3PD6rUQCRAL8hST8Z/AVHiIBIgG+pwQm7cMSy4DoW28hEiAS4CMSxogTXq9N/euvv1aGwPPf6MWvEwkQCfApCf8eEGgcvpp6tlQMHr6h3bcQCRAJ8FkJYkw5weClYhbz9fANkr7xNSIBIgG+iYQfP35oqEISoGKCXjM0vMdDJEAkwGUS1HnFnv8GGXkoRrkpCcBWHdGSr659mkiASIArJfz222+j8V/++OMPvpqlIDPzIMaJCXkgo3qKdUo1fuYpIgEiAS6TALSKh1KhWTokVz0InSJw9fs8RAJEAnyphNG10VISBEvN0iG54wGmu8bU4DMve4gEiAT4agke+PZzALwesPQYN8jsSxDjpjsVyvjhk0QCRAJcJqGYJVlqCsFyVQL5LapAx/32GSIBIgG+VALQladtTK23PLEMgLbwMFPRa2boCNTSbx8mEiAS4CMSltQIYhrpXsVqgRcL2PLzx4gEiAT4aglASx51lzHWporZllhNCrb8/AEiASIBvo8EQTF4koEy4PWCrS3y7uARkQCRABdIAPrxkPdMs23gSRqrSbFV7+cfEQkQCXCNBKAlT36jOudvQP1a2GFXqAZ6vGR1l6Sf3yUSIBLgMglAS55/0NuefincVSFcPdAR8PoFD5EAkQAXSBjtrzDzAJ7qBrt2MZgVC1V6seaBjPvYJhIgEuAaCdOPgA1WRwPyGlzse3A0WNaQcSsbRAJEAlwgAWjDM6/BLrjjG7MMy4MSYHnWfWwQCfD9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";
 
         [Command("prima")]
         public async Task Primagen(string dim = "1x1")
         {
-            //if (!(dim.Contains("x"))){
-            //    double primasd = Math.Sqrt(double.Parse(dim));
-            //    int primas = (int)Math.Ceiling(primasd);
-            //    Console.WriteLine(primas);
-            //}
-
             if(dim != "1x1")
             {
                 await Context.Channel.SendMessageAsync("Hold on, processing...");
@@ -80,11 +74,18 @@ namespace dicpicbotc.Modules
 
         private string getName()
         {
-            WebClient w = new WebClient();
-            byte[] dat = w.DownloadData("https://namey.muffinlabs.com/name.json?type=surname");
-            string name = System.Text.Encoding.UTF8.GetString(dat);
-            name = name.Substring(2, name.Length - 4);
-            return name;
+            try
+            {
+                WebClient w = new WebClient();
+                byte[] dat = w.DownloadData("https://namey.muffinlabs.com/name.json?type=surname");
+                string name = System.Text.Encoding.UTF8.GetString(dat);
+                name = name.Substring(2, name.Length - 4);
+                return name;
+            }
+            catch
+            {
+                return "netError";
+            }
         }
 
         public List<Point> getAllPositions(string dim)
@@ -186,47 +187,19 @@ namespace dicpicbotc.Modules
                     }
                     else if (p == basefeet)
                     {
-                        if (tag == "-c")
-                        {
-                            drawing.FillRectangle(fe, i, o, 1, 1);
-                        }
-                        else
-                        {
-                            drawing.FillRectangle(len, i, o, 1, 1);
-                        }
+                        drawing.FillRectangle(fe, i, o, 1, 1);
                     }
                     else if (p == baselegs)
                     {
-                        if (tag == "-c")
-                        {
-                            drawing.FillRectangle(le, i, o, 1, 1);
-                        }
-                        else
-                        {
-                            drawing.FillRectangle(len, i, o, 1, 1);
-                        }
+                        drawing.FillRectangle(le, i, o, 1, 1);
                     }
                     else if (p == baseface)
                     {
-                        if (tag == "-c")
-                        {
-                            //drawing.FillRectangle(fa, i, o, 1, 1);
-                        }
-                        else
-                        {
-                            //drawing.FillRectangle(fan, i, o, 1, 1);
-                        }
+                        drawing.FillRectangle(fan, i, o, 1, 1);
                     }
                     else if (p == baseweird)
                     {
-                        if (tag == "-c")
-                        {
-                            drawing.FillRectangle(we, i, o, 1, 1);
-                        }
-                        else
-                        {
-                            drawing.FillRectangle(wen, i, o, 1, 1);
-                        }
+                        drawing.FillRectangle(we, i, o, 1, 1);
                     }
                     else
                     {
