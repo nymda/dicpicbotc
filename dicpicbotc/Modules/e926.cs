@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.Commands;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,87 +14,50 @@ namespace dicpicbotc.Modules
     public class e926 : ModuleBase<SocketCommandContext>
     {
         [Command("e926")]
-        public async Task E926(string flags = "", string tag1 = "", string tag2 = "", string tag3 = "", string tag4 = "", string tag5 = "")
+        public async Task E926(params string[] dat)
         {
-            bool isCub = false;
+            Post selected = e621dl(string.Join("%20", dat), 9999999, "");
+            if (dat.Contains("dicpic"))
+            {
+                await ReplyAsync("Its me!");
+            }
+            await ReplyAsync("Boop! | Score: " + selected.score.total + " | Rating: " + obtainFullScore(selected.rating) + " | URL: " + selected.file.url);
+        }
 
-            string tag6 = "order:random";
+        public Random r = new Random();
 
-            string dppath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/dicpicbot_data/e926";
-
-            List<string> e926list = new List<string> { };
-
-            tag5 = tag4;
-            tag4 = tag3;
-            tag3 = tag2;
-            tag2 = tag1;
-            tag1 = flags;
-
-            string prestring = "https://e926.net/post/index.json?limit=10&tags=";
+        public string obtainFullScore(string sho)
+        {
+            switch (sho)
+            {
+                case "e":
+                    return "Explicit";
+                case "q":
+                    return "Questionable";
+                case "s":
+                    return "Safe";
+            }
+            return "unknown";
+        }
+        public Post e621dl(string tags, int prevLastID, string appendLoginText)
+        {
             WebClient w = new WebClient();
+            w.Headers.Add("user-agent", getRandomHeader());
+            byte[] dldata = w.DownloadData(@"https://e926.net/posts.json?limit=300&tags=" + tags + "+id%3A<" + prevLastID + appendLoginText);
+            string dataraw = System.Text.Encoding.UTF8.GetString(dldata);
+            dataraw = dataraw.Replace("\"has\":null", "\"has\":false");
+            dataraw = dataraw.Replace("\"status_locked\":null", "\"status_locked\":false");
+            RootObject parsedJson = JsonConvert.DeserializeObject<RootObject>(dataraw);
+            var noCub = parsedJson.posts.Where(Post => !Post.tags.general.Contains("cub"));
+            return noCub.ToArray()[r.Next(noCub.Count())];
+        }
+
+        public string getRandomHeader()
+        {
             Random random = new Random();
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             string rand = new string(Enumerable.Repeat(chars, 5).Select(s => s[random.Next(s.Length)]).ToArray());
-            w.Headers.Add("user-agent", "dicpicbot");
-            Console.WriteLine("[info] e926 searching: " + tag1 + " " + tag2 + " " + tag3 + " " + tag4 + " " + tag5);
-            byte[] e6d = w.DownloadData(prestring + tag1 + "," + tag2 + "," + tag3 + "," + tag4 + "," + tag5 + "," + tag6);
-            if(e6d.Length == 2)
-            {
-                await ReplyAsync("**No results!**");
-                return;
-            }
-            string e6draw = Encoding.UTF8.GetString(e6d);
-            string[] datarawsplit = e6draw.Split(new string[] { "]}" }, StringSplitOptions.None);
-            for (int i = 0; i < datarawsplit.Count(); i++)
-            {
-                string[] current = datarawsplit[i].Split(',');
-                for (int o = 0; o < current.Count(); o++)
-                {
-                    if (current[o].Contains("tags\""))
-                    {
-                        string[] tags = current[o].Split(' ');
-                        foreach(string tag in tags)
-                        {
-                            if(tag == "cub")
-                            {
-                                isCub = true;
-                            }
-                        }
-                    }
-                    if (current[o].Contains("file_url"))
-                    {
-                        string[] current2 = current[o].Split(new string[] { "\":\"" }, StringSplitOptions.None);
-                        string final = current2[1].Replace("\"", string.Empty);
-                        e926list.Add(final);
-                    }
-                }
-            }
-
-            Random r = new Random();
-
-            int e926int = 0;
-            string[] e6name = (e926list[e926int]).Split("/");
-            if (!(isCub))
-            {
-                var msg = await ReplyAsync("**not yiff!**\n" + e926list[e926int]);
-                //File.WriteAllText(dppath + "/lastmsg.txt", msg.Id.ToString() + "," + Context.Message.Author.Id.ToString());
-            }
-            else
-            {
-                await Context.Channel.SendFileAsync(dppath + "/hansen.jpg", "That image contained cub.");
-            }
-
-
-            //old content for non-fast mode
-
-            //if(flags == "-f")
-            //{
-            //    await ReplyAsync("**fast mode! **" + e926list[e926int]);
-            //    return;
-            //}
-
-            //w.DownloadFile(e926list[e926int], dppath + "/" + e6name[6]);
-            //await Context.Channel.SendFileAsync(dppath + "/" + e6name[6], "*magic porn robot.*");
+            return ("win621d_" + rand);
         }
     }
 }

@@ -15,8 +15,7 @@ namespace dicpicbotc.Modules
         [Command("echo")]
         public async Task Echo(params string[] text)
         {
-            string text_str = string.Join(" ", text);
-            await ReplyAsync(text_str);     
+            await ReplyAsync("Replaced with dp.vent");     
         }
     }
 }

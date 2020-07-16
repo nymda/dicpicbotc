@@ -29,15 +29,15 @@ namespace dicpicbotc.Modules
                 {
                     foundFile = true;
                     fileLocation = file.FullName;
-                    voters = File.ReadAllLines(dppath + "/" + id + "_voters.txt").ToList();
+                    voters = System.IO.File.ReadAllLines(dppath + "/" + id + "_voters.txt").ToList();
                     break;
                 }
             }
 
             string voteLow = vote.ToLower();
 
-            string[] polldata = File.ReadAllLines(fileLocation);
-            List<string> polldataList = File.ReadAllLines(fileLocation).ToList();
+            string[] polldata = System.IO.File.ReadAllLines(fileLocation);
+            List<string> polldataList = System.IO.File.ReadAllLines(fileLocation).ToList();
 
             try
             {
@@ -66,10 +66,10 @@ namespace dicpicbotc.Modules
                 current[1] = (Int32.Parse(current[1]) + 1).ToString();
                 string modified = string.Join(",", current);
                 polldataList[position + 2] = modified;
-                File.WriteAllLines(fileLocation, polldataList);
+                System.IO.File.WriteAllLines(fileLocation, polldataList);
                 await ReplyAsync("(" + id + ") " + current[0] + " now has " + current[1] + " votes!");
                 voters.Add(Context.Message.Author.Id.ToString());
-                File.WriteAllLines(dppath + "/" + id + "_voters.txt", voters.ToArray());
+                System.IO.File.WriteAllLines(dppath + "/" + id + "_voters.txt", voters.ToArray());
                 return;
             }
 
@@ -93,10 +93,10 @@ namespace dicpicbotc.Modules
                         current[1] = (Int32.Parse(current[1]) + 1).ToString();
                         string modified = string.Join(",", current);
                         polldataList[counter] = modified;
-                        File.WriteAllLines(fileLocation, polldataList);
+                        System.IO.File.WriteAllLines(fileLocation, polldataList);
                         await ReplyAsync("(" + id + ") " + vote + " now has " + current[1] + " votes!");
                         voters.Add(Context.Message.Author.Id.ToString());
-                        File.WriteAllLines(dppath + "/" + id + "_voters.txt", voters.ToArray());
+                        System.IO.File.WriteAllLines(dppath + "/" + id + "_voters.txt", voters.ToArray());
                         break;
                     }
                 }

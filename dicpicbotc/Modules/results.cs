@@ -27,7 +27,7 @@ namespace dicpicbotc.Modules
                 if (file.Name == id + ".txt")
                 {
                     foundFile = true;
-                    data = File.ReadAllLines(file.FullName).ToList();
+                    data = System.IO.File.ReadAllLines(file.FullName).ToList();
                     break;
                 }
             }

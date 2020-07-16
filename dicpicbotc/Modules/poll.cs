@@ -38,10 +38,10 @@ namespace dicpicbotc.Modules
                 {
                     holder = holder + s;
                 }
-                var b = File.Create(dppath + "/" + ID + ".txt");
+                var b = System.IO.File.Create(dppath + "/" + ID + ".txt");
                 b.Dispose();
-                File.WriteAllText(dppath + "/" + ID + ".txt", creatorid + "\n" + holder);
-                var f = File.Create(dppath + "/" + ID + "_voters.txt");
+                System.IO.File.WriteAllText(dppath + "/" + ID + ".txt", creatorid + "\n" + holder);
+                var f = System.IO.File.Create(dppath + "/" + ID + "_voters.txt");
                 var msg = await ReplyAsync("new poll created. ID: " + ID);
                 f.Dispose();
                 b.Dispose();
@@ -75,7 +75,7 @@ namespace dicpicbotc.Modules
 
                 try
                 {
-                    string[] currentpoll = File.ReadAllLines(dppath + "/" + id + ".txt");
+                    string[] currentpoll = System.IO.File.ReadAllLines(dppath + "/" + id + ".txt");
                     if(currentpoll[0] != creatorid)
                     {
                         await ReplyAsync("You cannot edit that poll.");
@@ -85,7 +85,7 @@ namespace dicpicbotc.Modules
                     List<string> currentpolledit = currentpoll.ToList();
                     currentpolledit.Add(holder);
                     currentpoll = currentpolledit.ToArray();
-                    File.WriteAllLines(dppath + "/" + id + ".txt", currentpoll);
+                    System.IO.File.WriteAllLines(dppath + "/" + id + ".txt", currentpoll);
                 }
                 catch
                 {

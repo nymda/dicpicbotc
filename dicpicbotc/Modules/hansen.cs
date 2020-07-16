@@ -17,7 +17,7 @@ namespace dicpicbotc.Modules
         public async Task Hansen()
         {
             string dppath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "/dicpicbot_data/e621";
-            string msgkey = File.ReadAllText(dppath + "/lastmsg.txt");
+            string msgkey = System.IO.File.ReadAllText(dppath + "/lastmsg.txt");
             string[] data = msgkey.Split(",");
 
             if(Context.Message.Author.Id.ToString() == data[1])
